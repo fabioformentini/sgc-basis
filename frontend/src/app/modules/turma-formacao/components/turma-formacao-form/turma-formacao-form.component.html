@@ -1,0 +1,129 @@
+<p-dialog [closable]="false" [(visible)]="display" [resizable]="true">
+    <p-header class="custom-dialog-header">{{ title }}</p-header>
+    <div [formGroup]="turmaFormacaoForm" [ngClass]="erroCss('nome')">
+        <div class="field col-12 md:col-12">
+            <label type="nome" id="nome">Nome *</label>
+            <input
+                type="text"
+                class="inputfield w-full col-6"
+                formControlName="nome"
+            />
+            <small *ngIf="turmaFormacaoForm.get('nome').invalid && turmaFormacaoForm.get('nome').touched" class="text-danger">Nome é obrigatório!</small>
+        </div>
+        <div class="field col-12 md:col-12">
+            <label for="descricao">Descrição</label>
+            <textarea
+                rows="5"
+                cols="30"
+                class="inputfield w-full"
+                pInputTextarea
+                formControlName="descricao"
+            ></textarea>
+            <small *ngIf="turmaFormacaoForm.get('descricao').invalid && turmaFormacaoForm.get('descricao').touched" class="text-danger">Descrição é obrigatória!</small>
+
+        </div>
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="dataInicio">Data de Início</label>
+            <p-calendar
+                type="text"
+                styleClass="w-full"
+                formControlName="dataInicio"
+                dateFormat="dd/mm/yy"
+                [yearNavigator]="true"
+                yearRange="1980:2030"
+            ></p-calendar>
+            <small *ngIf="turmaFormacaoForm.get('dataInicio').invalid && turmaFormacaoForm.get('dataInicio').touched" class="text-danger">Data de início é obrigatória!</small>
+
+        </div>
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="dataTermino">Data de Término</label>
+            <p-calendar
+                type="text"
+                styleClass="w-full"
+                formControlName="dataTermino"
+                dateFormat="dd/mm/yy"
+                [yearNavigator]="true"
+                yearRange="1980:2030"
+            ></p-calendar>
+            <small *ngIf="turmaFormacaoForm.get('dataTermino').invalid && turmaFormacaoForm.get('dataTermino').touched" class="text-danger">Data de término é obrigatória!</small>
+
+        </div>
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label>Status</label>
+            <p-dropdown
+                placeholder="Selecione o status"
+                styleClass="w-full dropborda col-12 md:col-6"
+                [options]="converterParaDropDown(status, 'id', 'descricao')"
+                appendTo="body"
+                formControlName="idStatus"
+            >
+            </p-dropdown>
+            <small *ngIf="turmaFormacaoForm.get('idStatus').invalid && turmaFormacaoForm.get('idStatus').touched" class="text-danger">Status é obrigatório!</small>
+
+        </div>
+    </div>
+    <hr width = 100%>
+    <h3 class="text-center">Selecione os colaboradores e competências</h3>
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <label>Colaborador</label>
+        <p-dropdown
+            #dd
+            placeholder="Selecione o colaborador"
+            styleClass="w-full dropborda col-12 md:col-6"
+            [options]="converterParaDropDown(colaborador, null, 'nome')"
+            [(ngModel)]="colaboradorSelecionado"
+            (onChange)="filtrarCompetencias(colaboradorSelecionado.id)"
+        >
+        </p-dropdown>
+    </div>
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <label>Competência</label>
+        <p-dropdown
+            placeholder="Selecione a competência"
+            styleClass="w-full dropborda col-12 md:col-6"
+            [options]="converterParaDropDown(competenciasFiltradas, null, 'nome')"
+            appendTo="body"
+            [(ngModel)]="competenciaSelecionada"
+        >
+        </p-dropdown>
+    </div>
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <button
+            pButton
+            pRipple
+            label="Add Colaborador/Competencia"
+            class="p-button-raised p-button-danger ui-button-success"
+            (click)="addCompetenciaColaborador()"
+        ></button>
+    </div>
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <h4>Colaboradores/Competências:</h4>
+        <div
+            *ngFor="let colaboradorCompetencia of turmaFormacaoForm.get('competenciasColaboradores').value"
+        >
+            {{ gerarNomeCompetenciaColaborador(colaboradorCompetencia) }}
+            <button
+                pButton
+                label="Excluir"
+                class="p-button-raised ui-button-danger personButton w-3 h-1rm"
+                (click)="
+                    removerCompetenciaColaborador(colaboradorCompetencia.idColaborador,colaboradorCompetencia.idCompetencia)"
+            ></button>
+            <hr width = 100% >
+        </div>
+    </div>
+    <p-footer>
+        <p-button
+            icon="pi pi-check"
+            label="{{ titleButton }}"
+            styleClass="p-button-text"
+            (click)="verificaId()"
+            [disabled]="!turmaFormacaoForm.valid"
+        ></p-button>
+        <p-button
+            icon="pi pi-times"
+            (click)="fecharModal()"
+            label="Cancelar"
+        ></p-button>
+    </p-footer>
+</p-dialog>

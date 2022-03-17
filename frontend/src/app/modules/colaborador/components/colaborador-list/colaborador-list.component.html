@@ -1,0 +1,60 @@
+<p-toast></p-toast>
+<h1 class="titulo-comp">Colaboradores</h1>
+<div class="container">
+    <app-colaborador-form
+        *ngIf="display"
+        [colaboradorEditado]="colaboradorEditado"
+        [display]="display"
+        (aoFechar)="display = false"
+        (refreshColaboradores)="atualizarColaboradores($event)"
+    ></app-colaborador-form>
+    <button
+        pButton
+        pRipple
+        label="Novo Colaborador"
+        (click)="showDialog(false)"
+        class="p-button-raised p-button-danger ui-button-success"
+    ></button>
+</div>
+<p-table [columns]="cols" [value]="colaboradores" responsiveLayout="scroll">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{ col.header }}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                <ng-container *ngIf="col.field == 'nome'">
+                    {{ rowData["nome"] + " " + rowData["sobrenome"] }}
+                </ng-container>
+                <ng-container
+                    *ngIf="col.field != 'acoes' && col.field != 'nome'"
+                >
+                    {{ rowData[col.field] }}
+                </ng-container>
+
+                <ng-container *ngIf="col.field == 'acoes'">
+                    <div class="botoesAcao">
+                        <button
+                            pButton
+                            pRipple
+                            label="Editar"
+                            class="p-button-raised p-button-danger"
+                            (click)="editarColaborador(rowData)"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            label="Excluir"
+                            (click)="excluirColaborador(rowData.id)"
+                            class="p-button-raised p-button-danger ui-button-danger"
+                        ></button>
+                    </div>
+                </ng-container>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

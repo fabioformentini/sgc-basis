@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="5" author="Fabio Formentini">
+
+        <createTable tableName="colaborador">
+
+            <column name="id" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="nome" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="sobrenome" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cpf" type="varchar(11)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="foto" type="text">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="data_nascimento" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="data_admissao" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="id_senioridade" type="integer">
+                <constraints foreignKeyName="fk_id_senioridade" references="senioridade(id)" nullable="false"/>
+            </column>
+
+
+        </createTable>
+
+        <createSequence sequenceName="sequencia_colaborador" cycle="false"  incrementBy="1" startValue="1"/>
+
+    </changeSet>
+
+</databaseChangeLog>

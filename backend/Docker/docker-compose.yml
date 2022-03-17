@@ -1,0 +1,12 @@
+version: '2'
+services:
+  sgc-postgresql:
+    extends:
+      file: postgresql.yml
+      service: sgc-postgresql
+    container_name: sgc-postgresql
+  sgc-elasticsearch:
+    extends:
+      file: elasticsearch.yml
+      service: sgc-elasticsearch
+    container_name: sgc-elasticsearch

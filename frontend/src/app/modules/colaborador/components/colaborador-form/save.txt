@@ -1,0 +1,66 @@
+<!-- <div [formGroup]="colabForm">
+                <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+                    <label for="nome">Nome</label>
+                    <input
+                        type="text"
+                        class="inputfield w-full"
+                        formControlName="nome"
+                    />
+                </div>
+
+                <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+                    <label for="nome">Sobrenome</label>
+                    <input
+                        type="text"
+                        class="inputfield w-full"
+                        formControlName="sobrenome"
+                    />
+                </div>
+
+                <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+                    <label for="nome">CPF</label>
+                    <p-inputMask
+                        mask="999.999.999-99"
+                        type="text"
+                        styleClass="w-full"
+                        formControlName="cpf"
+                    ></p-inputMask>
+                </div>
+
+                <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+                    <label for="nome">Email</label>
+                    <input
+                        type="text"
+                        class="inputfield w-full"
+                        formControlName="email"
+                    />
+                </div>
+
+                <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+                    <label for="nome">Data de Nascimento</label>
+                    <p-calendar
+                        type="text"
+                        styleClass="w-full"
+                        formControlName="dataNascimento"
+                    ></p-calendar>
+                </div>
+
+                <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+                    <label for="nome">Data de Admissão</label>
+                    <p-calendar
+                        type="text"
+                        styleClass=" w-full"
+                        formControlName="dataAdmissao"
+                    ></p-calendar>
+                </div>
+
+                <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+                    <label>Senioridade</label>
+                    <p-dropdown
+                        formControlName="idSenioridade"
+                        placeholder="Selecione a senioridade"
+                        styleClass="w-full dropborda col-12 md:col-6"
+                    >
+                    </p-dropdown>
+                </div>
+            </div> -->

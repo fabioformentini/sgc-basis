@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="Mateus Padovan">
+        <!-- Criar tabela turma_formacao -->
+        <createTable tableName="turma_formacao">
+            <!-- Criar coluna id (int, chave primária, não nulo) -->
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <!-- Criar coluna nome (varchar(250), não nulo) -->
+            <column name="nome" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <!-- Criar coluna descricao (text, não nulo) -->
+            <column name="descricao" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <!-- Criar coluna data_inicio (date, não nulo) -->
+            <column name="data_inicio" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <!-- Criar coluna data_termino (date, não nulo) -->
+            <column name="data_termino" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <!-- Criar coluna id_status (chave estrangeira, int, não nulo) -->
+            <column name="id_status" type="int">
+                <constraints nullable="false" foreignKeyName="fk_id_status" references="status(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

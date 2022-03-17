@@ -1,0 +1,153 @@
+<p-dialog [closable]="false" [(visible)]="display" [resizable]="true">
+    <p-header class="custom-dialog-header">{{ title }}</p-header>
+    <div [formGroup]="colabForm" [ngClass]="erroCss('nome')">
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="nome">Nome *</label>
+            <input
+                type="text"
+                class="inputfield w-full col-6"
+                formControlName="nome"
+            />
+        </div>
+        <small class="text-center" *ngIf="colabForm.get('nome').invalid && colabForm.get('nome').touched" class="text-danger">Nome é obrigatório!</small>
+
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="nome">Sobrenome *</label>
+            <input
+                type="text"
+                class="inputfield w-full col-6"
+                formControlName="sobrenome"
+            />
+        </div>
+        <small *ngIf="colabForm.get('sobrenome').invalid && colabForm.get('sobrenome').touched" class="text-danger">Sobrenome é obrigatório!</small>
+
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="nome">CPF *</label>
+            <p-inputMask
+                unmask="true"
+                mask="999.999.999-99"
+                type="text"
+                styleClass="w-full col-6"
+                formControlName="cpf"
+            ></p-inputMask>
+            <small *ngIf="colabForm.get('cpf').invalid && colabForm.get('cpf').touched" class="text-danger">CPF é obrigatório!</small>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="nome">Email *</label>
+            <input
+                type="text"
+                class="inputfield w-full col-6"
+                formControlName="email"
+            />
+            <small *ngIf="colabForm.get('email').invalid && colabForm.get('email').touched" class="text-danger">Email é obrigatório!</small>
+        </div>
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label>Senioridade</label>
+            <p-dropdown
+                placeholder="Selecione a senioridade"
+                styleClass="w-full col-6"
+                [options]="converterParaDropDown(nivel, 'id', 'descricao')"
+                appendTo="body"
+                formControlName="idSenioridade"
+            >
+            </p-dropdown>
+            <small *ngIf="colabForm.get('idSenioridade').invalid && colabForm.get('idSenioridade').touched" class="text-danger">Senioridade é obrigatória!</small>
+
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="nome">Data de Nascimento *</label>
+            <p-calendar
+                type="text"
+                styleClass="w-full col-6"
+                formControlName="dataNascimento"
+                dateFormat="dd/mm/yy"
+                [yearNavigator]="true"
+                yearRange="1980:2022"
+            ></p-calendar>
+            <small *ngIf="colabForm.get('dataNascimento').invalid && colabForm.get('dataNascimento').touched" class="text-danger">Data de nascimento é obrigatória!</small>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+            <label for="nome">Data de Admissão *</label>
+            <p-calendar
+                type="text"
+                styleClass=" w-full col-6"
+                formControlName="dataAdmissao"
+                dateFormat="dd/mm/yy"
+                [yearNavigator]="true"
+                yearRange="1980:2030"
+            ></p-calendar>
+            <small *ngIf="colabForm.get('dataAdmissao').invalid && colabForm.get('dataAdmissao').touched" class="text-danger">Data de admissão é obrigatória!</small>
+
+        </div>
+
+    </div>
+    <hr width = 100%>
+    <h3 class="text-center">Selecione as competências</h3>
+
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <label>Competências</label>
+        <p-dropdown
+            #dd
+            placeholder="Selecione a competência"
+            styleClass="w-full dropborda col-12 md:col-6"
+            [options]="converterParaDropDown(competencia, null, 'nome')"
+            [(ngModel)]="competenciaSelecionada"
+        >
+        </p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <label>Nível</label>
+        <p-dropdown
+            placeholder="Selecione a senioridade"
+            styleClass="w-full dropborda col-12 md:col-6"
+            [options]="converterParaDropDown(nivel, null, 'descricao')"
+            appendTo="body"
+            [(ngModel)]="nivelSelecionado"
+        >
+        </p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <button
+            pButton
+            pRipple
+            label="Add Competência"
+            class="p-button-raised p-button-danger ui-button-success"
+            (click)="addCompetencia()"
+        ></button>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+        <h4>Competências selecionadas:</h4>
+        <div *ngFor="let compNivel of colabForm.get('competenciasList').value">
+            {{ gerarNomeCompetencia(compNivel) }}
+            <button
+                pButton
+                label="Excluir"
+                class="p-button-raised ui-button-danger personButton w-3 h-1rm"
+                (click)="removerCompetencia(compNivel.idCompetencia)"
+            ></button>
+            <hr width = 100% >
+        </div>
+    </div>
+    <!-- {{colabForm.getRawValue() | json}} <br> -->
+
+    <p-footer>
+        <p-button
+            icon="pi pi-check"
+            label="{{ titleButton }}"
+            styleClass="p-button-text"
+            (click)="verificaId()"
+            [disabled]="!colabForm.valid"
+        ></p-button>
+        <p-button
+            icon="pi pi-times"
+            (click)="fecharModal()"
+            label="Cancelar"
+        ></p-button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,12 @@
+.ng-invaolid.ng-touched:not(form){
+    border: 1px solid red;
+}
+
+.text-danger{
+    color: red
+}
+
+.personButton{
+    height: 30px !important;
+    width: 70px !important;
+}

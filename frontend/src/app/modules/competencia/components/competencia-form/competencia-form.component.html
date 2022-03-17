@@ -1,0 +1,60 @@
+<p-toast></p-toast>
+<p-dialog [closable]="false" [(visible)]="display" [resizable]="true">
+    <p-header class="custom-dialog-header">{{ title }}</p-header>
+    <div [formGroup]="compForm" [ngClass]="erroCss('nome')">
+        <div class="field col-12 md:col-12">
+            <label type="nome" id="nome">Nome *</label>
+            <input
+                for="name"
+                type="text"
+                class="inputfield w-full col-6"
+                formControlName="nome"
+                required
+            />
+            <small *ngIf="compForm.get('nome').invalid && compForm.get('nome').touched" class="text-danger">Nome é obrigatório!</small>
+        </div>
+
+        <div class="field col-12 md:col-12">
+            <label for="descricao">Descrição *</label>
+            <textarea
+                rows="6"
+                cols="30"
+                class="inputfield w-full "
+                pInputTextarea
+                formControlName="descricao"
+            ></textarea>
+            <small *ngIf="compForm.get('descricao').invalid && compForm.get('descricao').touched" class="text-danger">A descrição é obrigatória!</small>
+        </div>
+
+        <div class="field col-12 md:col-12">
+            <label>Categoria *</label>
+            <p-dropdown
+                [options]="converterParaDropDown(categorias, 'id', 'descricao')"
+                formControlName="idCategoria"
+                placeholder="Selecione a categoria"
+                styleClass="w-full dropborda col-12 md:col-6"
+                appendTo="body"
+                scrollHeight="150px"
+            >
+            </p-dropdown>
+            <small *ngIf="compForm.get('idCategoria').invalid && compForm.get('idCategoria').touched" class="text-danger">A categoria é obrigatória!</small>
+
+            <!-- {{compForm.getRawValue() | json}} <br> -->
+        </div>
+    </div>
+
+    <p-footer>
+        <p-button
+            icon="pi pi-check"
+            label="{{ titleButton }}"
+            styleClass="p-button-text"
+            (click)="verificaId()"
+            [disabled]="!compForm.valid"
+        ></p-button>
+        <p-button
+            icon="pi pi-times"
+            (click)="fecharModal()"
+            label="Cancelar"
+        ></p-button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,78 @@
+@import 'primeflex/primeflex.css';
+@import 'primeicons/primeicons.css';
+
+
+.ui-dialog-titlebar{
+    text-align: center;
+}
+
+.ui-dialog-resizable .ui-dialog-content {
+    overflow: visible;
+}
+.ui-dropdown{
+    border: 1px solid #767676;
+    border-width: 1px !important;
+
+}
+
+.ui-inputtext{
+    border-width: 1px !important;
+}
+
+.ui-dialog-resizable .ui-dialog-content {
+    overflow: auto;
+}
+
+.ui-dialog {
+    width: 500px !important;
+    height: auto;
+}
+
+.ui-confirmdialog{
+    width: auto;
+    height: auto;
+}
+
+.ui-messages-success{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 60px;
+}
+
+.ui-messages{
+    opacity: 1;
+}
+
+.ui-widget-overlay {
+    opacity: 1 !important;
+    background-color: rgba(88, 87, 92, 0.5) !important;
+}
+
+input.ng-dirty.ng-invalid{
+    border: 1px solid red;
+}
+
+// .layout-container .topbar {
+//     background-color: #8fcce3;
+
+// }
+
+// .layout-container .topbar .topbar-left {
+//     background-color: #0a4870;
+
+// }
+:host ::ng-deep {
+    .p-toast-message-custom {
+        background-color: #E1CFE7;
+        border: solid #8A427A;
+        border-width: 0 0 0 6px;
+        color: #2c1e30;
+        .p-toast-icon-close {
+            color: #2c1e30;
+        }
+    }
+}
+
+
+

@@ -1,0 +1,11 @@
+com/basis/turma/sgc/builder/CompetenciaBuilder.class
+com/basis/turma/sgc/resource/CompetenciaResource.class
+com/basis/turma/sgc/builder/CustomizacaoEntidade.class
+com/basis/turma/sgc/builder/CategoriaBuilder.class
+com/basis/turma/sgc/util/TestUtil$ZonedDateTimeMatcher.class
+com/basis/turma/sgc/builder/ConstrutorDeEntidade.class
+com/basis/turma/sgc/SgcProjectApplicationTests.class
+com/basis/turma/sgc/util/TestUtil.class
+com/basis/turma/sgc/builder/StatusBuilder.class
+com/basis/turma/sgc/resource/StatusResource.class
+com/basis/turma/sgc/util/IntTestComum.class

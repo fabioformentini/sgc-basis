@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    
+    <changeSet id="1" author="Mateus Padovan">
+        <insert tableName="categoria">
+            <column name="id" value="1"></column>
+            <column name="descricao" value="Backend"></column>
+        </insert>
+        <insert tableName="categoria">
+            <column name="id" value="2"></column>
+            <column name="descricao" value="Frontend"></column>
+        </insert>
+        <insert tableName="categoria">
+            <column name="id" value="3"></column>
+            <column name="descricao" value="Banco"></column>
+        </insert>
+        <insert tableName="categoria">
+            <column name="id" value="4"></column>
+            <column name="descricao" value="Arquitetura"></column>
+        </insert>
+        <insert tableName="categoria">
+            <column name="id" value="5"></column>
+            <column name="descricao" value="Metodologia Ágil"></column>
+        </insert>
+        <insert tableName="categoria">
+            <column name="id" value="6"></column>
+            <column name="descricao" value="Testes"></column>
+        </insert>
+        <insert tableName="categoria">
+            <column name="id" value="7"></column>
+            <column name="descricao" value="Devops"></column>
+        </insert>
+        <insert tableName="categoria">
+            <column name="id" value="8"></column>
+            <column name="descricao" value="Liderança"></column>
+        </insert>
+    </changeSet>
+    
+</databaseChangeLog>

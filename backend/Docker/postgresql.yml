@@ -1,0 +1,9 @@
+version: '2'
+services:
+  sgc-postgresql:
+    image: postgres:11.5
+    environment:
+      - POSTGRES_USER=sgc
+      - POSTGRES_PASSWORD=sgc
+    ports:
+      - 5432:5432
