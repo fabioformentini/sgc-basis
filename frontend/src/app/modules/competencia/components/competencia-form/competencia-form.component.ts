@@ -1,18 +1,17 @@
-import { Observable } from "rxjs";
-import { CategoriaModel } from "./../../models/categoria.model";
-import { MessageService, SelectItem } from "primeng/api";
-import { CompetenciaModel } from "./../../models/competencia.model";
-import { CategoriaService } from "./../../services/categoria.service";
-import { Component, Input, OnInit, Output, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { CompetenciaService } from "../../services/competencia.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { EventEmitter } from "@angular/core";
+import { Observable } from 'rxjs';
+import { CategoriaModel } from '../../models/categoria.model';
+import { MessageService, SelectItem } from 'primeng/api';
+import { CompetenciaModel } from '../../models/competencia.model';
+import { CategoriaService } from '../../services/categoria.service';
+import { Component, Input, OnInit, Output} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CompetenciaService } from '../../services/competencia.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
-    selector: "app-competencia-form",
-    templateUrl: "./competencia-form.component.html",
-    styleUrls: ["./competencia-form.component.css"],
+    selector: 'app-competencia-form',
+    templateUrl: './competencia-form.component.html',
+    styleUrls: ['./competencia-form.component.css'],
 })
 export class CompetenciaFormComponent implements OnInit {
     public compForm: FormGroup;
@@ -30,7 +29,6 @@ export class CompetenciaFormComponent implements OnInit {
         private fb: FormBuilder,
         private rest: CompetenciaService,
         private categoriaService: CategoriaService,
-        public activatedRouter: ActivatedRoute,
         private messageService: MessageService
     ) {}
 
@@ -38,19 +36,19 @@ export class CompetenciaFormComponent implements OnInit {
         this.getCategorias();
         this.compForm = this.fb.group({
             id: [null],
-            nome: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(55)]],
-            descricao: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-            idCategoria: ["", [Validators.required]],
+            nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(55)]],
+            descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+            idCategoria: ['', [Validators.required]],
         });
         if (!!this.competenciaEditada) {
             this.titleModal = false;
             this.compForm.patchValue(this.competenciaEditada);
-            console.log("isso: " + this.competenciaEditada);
+            console.log('isso: ' + this.competenciaEditada);
         }
     }
 
     verificaId() {
-        if (!this.compForm.get("id").value) {
+        if (!this.compForm.get('id').value) {
             this.createCompetencia();
             return;
         }
@@ -61,7 +59,7 @@ export class CompetenciaFormComponent implements OnInit {
         this.finalizarRequisicao(
             this.rest.postCompetencia(this.compForm.getRawValue())
         );
-        this.showMessageCriar()
+        this.showMessageCriar();
 
     }
 
@@ -69,11 +67,11 @@ export class CompetenciaFormComponent implements OnInit {
         this.finalizarRequisicao(
             this.rest.putCompetencia(this.compForm.getRawValue())
         );
-        this.showMessageEditar()
+        this.showMessageEditar();
     }
 
     finalizarRequisicao(observable: Observable<CompetenciaModel>) {
-        observable.subscribe((result) => {
+        observable.subscribe(() => {
             this.refreshCompetencias.emit();
             this.fecharModal();
         });
@@ -85,16 +83,16 @@ export class CompetenciaFormComponent implements OnInit {
                 this.categorias = data;
             },
             (error) => {
-                console.log("Erro", error);
+                console.log('Erro', error);
             }
         );
     }
 
     showMessageEditar() {
-        this.messageService.add({severity:'success', summary: 'Competência editada com sucesso!', detail:''});
+        this.messageService.add({severity: 'success', summary: 'Competência editada com sucesso!', detail: ''});
     }
     showMessageCriar() {
-        this.messageService.add({severity:'success', summary: 'Competência criada com sucesso!', detail:''});
+        this.messageService.add({severity: 'success', summary: 'Competência criada com sucesso!', detail: ''});
     }
 
     converterParaDropDown(n: any[], valor: string, nome: string): SelectItem[] {
@@ -110,21 +108,21 @@ export class CompetenciaFormComponent implements OnInit {
     }
 
     get title() {
-        return this.titleModal ? "Nova competência" : "Editar competência";
+        return this.titleModal ? 'Nova competência' : 'Editar competência';
     }
 
     get titleButton() {
-        return this.titleModal ? "Criar" : "Editar";
+        return this.titleModal ? 'Criar' : 'Editar';
     }
 
-    verificaValidacao(campo){
+    verificaValidacao(campo) {
         return this.compForm.get(campo).valid && this.compForm.get(campo).touched;
     }
 
-    erroCss(campo){
+    erroCss(campo) {
         return{
             'has-error': this.verificaValidacao(campo),
             'has-feedback': this.verificaValidacao(campo)
-        }
+        };
     }
 }

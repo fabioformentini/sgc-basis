@@ -1,7 +1,6 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { PRIMENG_IMPORTS } from './primeng-imports';
-import { SelectItem } from 'primeng/api';
+import {NgModule} from '@angular/core';
+import {PRIMENG_IMPORTS} from './primeng-imports';
+import {DialogExcluirComponent} from './components/dialog-excluir/dialog-excluir.component';
 
 
 @NgModule({
@@ -9,9 +8,10 @@ import { SelectItem } from 'primeng/api';
         PRIMENG_IMPORTS,
     ],
     providers: [],
+    declarations: [DialogExcluirComponent],
     exports: [
         PRIMENG_IMPORTS,
-    ],
+        DialogExcluirComponent],
 
 })
 export class SharedModule { }

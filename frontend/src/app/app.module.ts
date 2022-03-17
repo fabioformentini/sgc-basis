@@ -14,6 +14,7 @@ import { ErrorModule, SecurityModule, VersionTagModule } from '@nuvem/angular-ba
 import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogExcluirComponent } from './shared/components/dialog-excluir/dialog-excluir.component';
 
 
 
@@ -26,8 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ],
     imports: [
         BlockUIModule.forRoot({
-            message: "Carregando..."
-          }),
+            message: 'Carregando...'
+        }),
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
@@ -45,7 +46,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        {provide: LocationStrategy, useClass: HashLocationStrategy}
+    ],
+    exports: [
+        DialogExcluirComponent
     ],
     bootstrap: [AppComponent]
 })

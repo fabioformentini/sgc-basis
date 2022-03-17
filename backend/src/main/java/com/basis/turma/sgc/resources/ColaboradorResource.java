@@ -1,12 +1,8 @@
 package com.basis.turma.sgc.resources;
 
 
-
-import com.basis.turma.sgc.domain.Colaborador;
 import com.basis.turma.sgc.service.ColaboradorService;
 import com.basis.turma.sgc.service.dto.ColaboradorDTO;
-import com.basis.turma.sgc.service.dto.ColaboradorListaDTO;
-import com.basis.turma.sgc.service.dto.TurmaFormacaoDTO;
 import com.basis.turma.sgc.service.mapper.ColaboradorMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

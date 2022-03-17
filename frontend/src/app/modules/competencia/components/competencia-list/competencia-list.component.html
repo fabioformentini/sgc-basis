@@ -44,12 +44,9 @@
                                 pButton
                                 pRipple
                                 label="Excluir"
-                                (click)="excluirCompetencia(rowData.id)"
+                                (click)="confirm( rowData.id)"
                                 class="p-button-raised p-button-danger ui-button-danger"
                             ></button>
-                            <p-confirmDialog
-                                [style]="{ width: '30vw' }"
-                            ></p-confirmDialog>
                         </div>
                     </ng-container>
                 </td>
@@ -57,3 +54,4 @@
         </ng-template>
     </p-table>
 </div>
+<app-dialog-excluir #dialogExcluir [confirmation]="confirmation"></app-dialog-excluir>
