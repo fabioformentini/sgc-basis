@@ -1,22 +1,22 @@
-import { CompetenciaColaboradorModel } from "./../../models/competencia-colaborador.model";
-import { observable, Observable } from "rxjs";
-import { CompetenciaModel } from "./../../../competencia/models/competencia.model";
-import { ColaboradorModel } from "./../../../colaborador/models/colaborador.model";
-import { CompetenciaService } from "./../../../competencia/services/competencia.service";
-import { ColaboradorService } from "./../../../colaborador/services/colaborador.service";
-import { ActivatedRoute } from "@angular/router";
-import { StatusService } from "./../../services/status.service";
-import { StatusModel } from "./../../models/status.model";
-import { TurmaFormacaoModel } from "./../../models/turma-formacao.model";
-import { TurmaFormacaoService } from "./../../services/turma-formacao.service";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
-import { MessageService, SelectItem } from "primeng";
+import { CompetenciaColaboradorModel } from '../../models/competencia-colaborador.model';
+import { Observable } from 'rxjs';
+import { CompetenciaModel } from '../../../competencia/models/competencia.model';
+import { ColaboradorModel } from '../../../colaborador/models/colaborador.model';
+import { CompetenciaService } from '../../../competencia/services/competencia.service';
+import { ColaboradorService } from '../../../colaborador/services/colaborador.service';
+import { StatusService } from '../../services/status.service';
+import { StatusModel } from '../../models/status.model';
+import { TurmaFormacaoModel } from '../../models/turma-formacao.model';
+import { TurmaFormacaoService } from '../../services/turma-formacao.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ConfirmationService, MessageService, SelectItem} from 'primeng';
+import {FuncoesUtil} from '../../../../shared/funcoes.util';
 
 @Component({
-    selector: "app-turma-formacao-form",
-    templateUrl: "./turma-formacao-form.component.html",
-    styleUrls: ["./turma-formacao-form.component.css"],
+    selector: 'app-turma-formacao-form',
+    templateUrl: './turma-formacao-form.component.html',
+    styleUrls: ['./turma-formacao-form.component.css'],
 })
 export class TurmaFormacaoFormComponent implements OnInit {
     turmaFormacaoForm: FormGroup;
@@ -31,7 +31,7 @@ export class TurmaFormacaoFormComponent implements OnInit {
     competenciasFiltradas: CompetenciaModel[] = [];
     titleModal = true;
 
-    public isVisualizar: boolean = true;
+    public isVisualizar = true;
 
     @Input() display = false;
     @Input() turmaFormacaoEditada: TurmaFormacaoModel;
@@ -44,7 +44,8 @@ export class TurmaFormacaoFormComponent implements OnInit {
         private turmaFormacaoService: TurmaFormacaoService,
         private colaboradorService: ColaboradorService,
         private competenciaService: CompetenciaService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService
         ) {
             this.opcoesColaborador = [];
             this.opcoesCompetencia = [];
@@ -56,11 +57,11 @@ export class TurmaFormacaoFormComponent implements OnInit {
         this.getStatus();
         this.turmaFormacaoForm = this.formBuilder.group({
             id: [null],
-            nome: ["", [Validators.required]],
-            descricao: ["", [Validators.required]],
-            dataInicio: ["", [Validators.required]],
-            dataTermino: ["", [Validators.required]],
-            idStatus: ["", [Validators.required]],
+            nome: ['', [Validators.required]],
+            descricao: ['', [Validators.required]],
+            dataInicio: ['', [Validators.required]],
+            dataTermino: ['', [Validators.required]],
+            idStatus: ['', [Validators.required]],
             competenciasColaboradores: [[]],
         });
         if (!!this.turmaFormacaoEditada) {
@@ -69,13 +70,13 @@ export class TurmaFormacaoFormComponent implements OnInit {
         }
     }
 
-    public filtrarCompetencias(idColab: number){
-        const findColab = this.colaborador.find((it)=>it.id === idColab) //identificando colab passado
-        if (findColab){
-            const competencias = findColab.competenciasList
-            this.competenciasFiltradas = this.competencia.filter((it)=>{
-                return competencias.some((it2)=> it2.nivel === 4 && it2.idCompetencia === it.id)
-            })
+    public filtrarCompetencias(idColab: number) {
+        const findColab = this.colaborador.find((it) => it.id === idColab); // identificando colab passado
+        if (findColab) {
+            const competencias = findColab.competenciasList;
+            this.competenciasFiltradas = this.competencia.filter((it) => {
+                return competencias.some((it2) => it2.nivel === 4 && it2.idCompetencia === it.id);
+            });
         }
     }
 
@@ -85,7 +86,7 @@ export class TurmaFormacaoFormComponent implements OnInit {
                 this.colaborador = data;
             },
             (error) => {
-                console.log("Erro", error);
+                console.log('Erro', error);
             }
         );
     }
@@ -96,7 +97,7 @@ export class TurmaFormacaoFormComponent implements OnInit {
                 this.competencia = data;
             },
             (error) => {
-                console.log("Erro", error);
+                console.log('Erro', error);
             }
         );
     }
@@ -107,7 +108,7 @@ export class TurmaFormacaoFormComponent implements OnInit {
                 this.status = data;
             },
             (error) => {
-                console.log("Erro", error);
+                console.log('Erro', error);
             }
             );
         }
@@ -144,14 +145,14 @@ export class TurmaFormacaoFormComponent implements OnInit {
     }
 
     showMessageEditar() {
-        this.messageService.add({severity:'success', summary: 'Turma de formação editada com sucesso!', detail:''});
+        this.messageService.add({severity: 'success', summary: 'Turma de formação editada com sucesso!', detail: ''});
     }
     showMessageCriar() {
-        this.messageService.add({severity:'success', summary: 'Turma de formação criada com sucesso!', detail:''});
+        this.messageService.add({severity: 'success', summary: 'Turma de formação criada com sucesso!', detail: ''});
     }
 
     public verificaId() {
-        if (!this.turmaFormacaoForm.get("id").value) {
+        if (!this.turmaFormacaoForm.get('id').value) {
             this.createTurmaFormacao();
             return;
         }
@@ -161,7 +162,7 @@ export class TurmaFormacaoFormComponent implements OnInit {
 
     public addCompetenciaColaborador() {
         const campoCompetenciaColaboradorList: CompetenciaColaboradorModel[] =
-            this.turmaFormacaoForm.get("competenciasColaboradores").value;
+            this.turmaFormacaoForm.get('competenciasColaboradores').value;
         const idColaboradorSelecionado = this.colaboradorSelecionado.id;
         const idCompetenciaSelecionada = this.competenciaSelecionada.id;
         const colaboradorCompetencia: CompetenciaColaboradorModel =
@@ -170,12 +171,17 @@ export class TurmaFormacaoFormComponent implements OnInit {
                 idCompetenciaSelecionada
             );
         campoCompetenciaColaboradorList.push(colaboradorCompetencia);
-        console.log(campoCompetenciaColaboradorList)
+        console.log(campoCompetenciaColaboradorList);
+    }
+
+    confirm(idColab: number, idComp: number) {
+        this.confirmationService.confirm(FuncoesUtil.criarConfirmation('Deseja mesmo excluir o registro?', 'Confirmar Exclusão',
+            () => this.removerCompetenciaColaborador(idColab, idComp),  'Excluir', 'Cancelar'));
     }
 
     public removerCompetenciaColaborador(idColab: number, idComp: number): void {
         const campoCompetenciaColaboradorList: CompetenciaColaboradorModel[] =
-            this.turmaFormacaoForm.get("competenciasColaboradores").value;
+            this.turmaFormacaoForm.get('competenciasColaboradores').value;
 
         const index = campoCompetenciaColaboradorList.findIndex(
             ({ idColaborador, idCompetencia }) => idColaborador === idColab && idCompetencia === idComp
@@ -198,19 +204,19 @@ export class TurmaFormacaoFormComponent implements OnInit {
         );
         return (
             nomeColaborador.nome +
-            " " +
+            ' ' +
             nomeColaborador.sobrenome +
-            " = " +
+            ' = ' +
             nomeCompetencia.nome
         );
     }
 
     get title() {
-        return this.titleModal ? "Nova Turma" : "Editar Turma";
+        return this.titleModal ? 'Nova Turma' : 'Editar Turma';
     }
 
     get titleButton() {
-        return this.titleModal ? "Criar" : "Editar";
+        return this.titleModal ? 'Criar' : 'Editar';
     }
 
     converterParaDropDown(n: any[], valor: string, nome: string): SelectItem[] {
@@ -220,14 +226,14 @@ export class TurmaFormacaoFormComponent implements OnInit {
         }));
     }
 
-    verificaValidacao(campo){
+    verificaValidacao(campo) {
         return this.turmaFormacaoForm.get(campo).valid && this.turmaFormacaoForm.get(campo).touched;
     }
 
-    erroCss(campo){
+    erroCss(campo) {
         return{
             'has-error': this.verificaValidacao(campo),
             'has-feedback': this.verificaValidacao(campo)
-        }
+        };
     }
 }

@@ -106,8 +106,7 @@
                 pButton
                 label="Excluir"
                 class="p-button-raised ui-button-danger personButton w-3 h-1rm"
-                (click)="
-                    removerCompetenciaColaborador(colaboradorCompetencia.idColaborador,colaboradorCompetencia.idCompetencia)"
+                (click)="confirm(colaboradorCompetencia.idColaborador,colaboradorCompetencia.idCompetencia)"
             ></button>
             <hr width = 100% >
         </div>
@@ -127,3 +126,4 @@
         ></p-button>
     </p-footer>
 </p-dialog>
+

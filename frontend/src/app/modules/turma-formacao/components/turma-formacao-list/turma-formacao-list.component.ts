@@ -1,22 +1,24 @@
-import { TurmaFormacaoService } from "./../../services/turma-formacao.service";
-import { TurmaFormacaoModel } from "./../../models/turma-formacao.model";
-import { Component, OnInit } from "@angular/core";
-import { MessageService } from "primeng";
+import { TurmaFormacaoService } from '../../services/turma-formacao.service';
+import { TurmaFormacaoModel } from '../../models/turma-formacao.model';
+import { Component, OnInit } from '@angular/core';
+import {ConfirmationService, MessageService} from 'primeng';
+import {FuncoesUtil} from '../../../../shared/funcoes.util';
 
 @Component({
-    selector: "app-turma-formacao-list",
-    templateUrl: "./turma-formacao-list.component.html",
-    styleUrls: ["./turma-formacao-list.component.css"],
+    selector: 'app-turma-formacao-list',
+    templateUrl: './turma-formacao-list.component.html',
+    styleUrls: ['./turma-formacao-list.component.css'],
 })
 export class TurmaFormacaoListComponent implements OnInit {
     cols: any[];
     turmasFormacao: TurmaFormacaoModel[];
-    display: boolean = false;
+    display = false;
     turmaFormacaoEditada: TurmaFormacaoModel;
-    isVisualizar: boolean = false;
+    isVisualizar = false;
 
     constructor(private turmaFormacaoService: TurmaFormacaoService,
-        private messageService: MessageService) {}
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService) {}
 
     ngOnInit(): void {
         this.getTurmaFormacao();
@@ -25,11 +27,11 @@ export class TurmaFormacaoListComponent implements OnInit {
 
     public columns() {
         this.cols = [
-            { field: "nome", header: "Nome" },
-            { field: "dataInicio", header: "Data de Início" },
-            { field: "dataTermino", header: "Data de Término" },
-            { field: "descricaoStatus", header: "Status" },
-            { field: "acoes", header: "Ações" },
+            { field: 'nome', header: 'Nome' },
+            { field: 'dataInicio', header: 'Data de Início' },
+            { field: 'dataTermino', header: 'Data de Término' },
+            { field: 'descricaoStatus', header: 'Status' },
+            { field: 'acoes', header: 'Ações' },
         ];
     }
 
@@ -39,7 +41,7 @@ export class TurmaFormacaoListComponent implements OnInit {
                 this.turmasFormacao = data;
             },
             (error) => {
-                console.log("Erro", error);
+                console.log('Erro', error);
             }
         );
     }
@@ -49,6 +51,11 @@ export class TurmaFormacaoListComponent implements OnInit {
         turmaFormacao.dataTermino = new Date(turmaFormacao.dataTermino);
         this.turmaFormacaoEditada = turmaFormacao;
         this.showDialog(true);
+    }
+
+    confirm(id: number) {
+        this.confirmationService.confirm(FuncoesUtil.criarConfirmation('Deseja mesmo excluir o registro?', 'Confirmar Exclusão',
+            () => this.excluirTurmaFormacao(id),  'Excluir', 'Cancelar'));
     }
 
     public excluirTurmaFormacao(id: number) {
@@ -63,10 +70,10 @@ export class TurmaFormacaoListComponent implements OnInit {
     }
 
     showMessageSuccess() {
-        this.messageService.add({severity:'success', summary: 'Turma de formação excluída com sucesso!', detail:''});
+        this.messageService.add({severity: 'success', summary: 'Turma de formação excluída com sucesso!', detail: ''});
     }
     showMessageError() {
-        this.messageService.add({severity:'error', summary: 'Falha ao excluir turma de formação', detail:'Verifique se há colaboradores vinculados'});
+        this.messageService.add({severity: 'error', summary: 'Falha ao excluir turma de formação', detail: 'Verifique se há colaboradores vinculados'});
     }
 
     public atualizarTurmasFormacao(event) {
