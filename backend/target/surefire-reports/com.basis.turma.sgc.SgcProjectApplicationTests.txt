@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.basis.turma.sgc.SgcProjectApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.566 s - in com.basis.turma.sgc.SgcProjectApplicationTests
