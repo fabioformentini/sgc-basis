@@ -1,11 +1,11 @@
-import { ColaboradorModel } from "./../models/colaborador.model";
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { ColaboradorModel } from './../models/colaborador.model';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: "root",
+    providedIn: 'root',
 })
 export class ColaboradorService {
     constructor(private http: HttpClient) {}
@@ -14,7 +14,7 @@ export class ColaboradorService {
 
     public getColaborador(): Observable<ColaboradorModel[]> {
         return this.http.get<ColaboradorModel[]>(
-            this.UrlService + "/colaborador"
+            this.UrlService + '/colaborador'
         );
     }
 
@@ -22,18 +22,18 @@ export class ColaboradorService {
         colaborador: ColaboradorModel
     ): Observable<ColaboradorModel> {
         return this.http.post<ColaboradorModel>(
-            this.UrlService + "/colaborador",
+            this.UrlService + '/colaborador',
             colaborador
         );
     }
 
-    public deleteColaborador(id: number): Observable<ColaboradorModel>{
-        const url = `${this.UrlService}/colaborador/${id}`  //estudar template string
+    public deleteColaborador(id: number): Observable<ColaboradorModel> {
+        const url = `${this.UrlService}/colaborador/${id}`;  // estudar template string
         return this.http.delete<ColaboradorModel>(url);
     }
 
-    public putColaborador(colaborador: ColaboradorModel): Observable<ColaboradorModel>{
-        const url = `${this.UrlService}/colaborador/${colaborador.id}`
-        return this.http.put<ColaboradorModel>(url, colaborador)
+    public putColaborador(colaborador: ColaboradorModel): Observable<ColaboradorModel> {
+        const url = `${this.UrlService}/colaborador/${colaborador.id}`;
+        return this.http.put<ColaboradorModel>(url, colaborador);
     }
 }

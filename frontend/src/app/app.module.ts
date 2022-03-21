@@ -14,7 +14,7 @@ import { ErrorModule, SecurityModule, VersionTagModule } from '@nuvem/angular-ba
 import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DialogExcluirComponent } from './shared/components/dialog-excluir/dialog-excluir.component';
+import {ConfirmationService} from 'primeng';
 
 
 
@@ -46,10 +46,8 @@ import { DialogExcluirComponent } from './shared/components/dialog-excluir/dialo
 
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
-    ],
-    exports: [
-        DialogExcluirComponent
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        ConfirmationService
     ],
     bootstrap: [AppComponent]
 })

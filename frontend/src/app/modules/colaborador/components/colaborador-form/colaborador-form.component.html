@@ -129,12 +129,11 @@
                 pButton
                 label="Excluir"
                 class="p-button-raised ui-button-danger personButton w-3 h-1rm"
-                (click)="removerCompetencia(compNivel.idCompetencia)"
+                (click)="confirm(compNivel.idCompetencia)"
             ></button>
             <hr width = 100% >
         </div>
     </div>
-    <!-- {{colabForm.getRawValue() | json}} <br> -->
 
     <p-footer>
         <p-button
@@ -150,4 +149,8 @@
             label="Cancelar"
         ></p-button>
     </p-footer>
+
 </p-dialog>
+<!--<p-confirmDialog [style]="{width: '50vw'}" header="Confirmação" icon="pi pi-exclamation-triangle"></p-confirmDialog>-->
+
+<!--(click)="removerCompetencia(compNivel.idCompetencia)"-->

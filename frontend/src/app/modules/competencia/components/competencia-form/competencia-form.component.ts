@@ -41,6 +41,7 @@ export class CompetenciaFormComponent implements OnInit {
             idCategoria: ['', [Validators.required]],
         });
         if (!!this.competenciaEditada) {
+            console.log('entrou');
             this.titleModal = false;
             this.compForm.patchValue(this.competenciaEditada);
             console.log('isso: ' + this.competenciaEditada);

@@ -4,7 +4,7 @@ import { CompetenciaService } from '../../services/competencia.service';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Confirmation, ConfirmationService} from 'primeng';
 import {FuncoesUtil} from '../../../../shared/funcoes.util';
-import {DialogExcluirComponent} from '../../../../shared/components/dialog-excluir/dialog-excluir.component';
+
 
 @Component({
     selector: 'app-competencia-list',
@@ -17,38 +17,31 @@ export class CompetenciaListComponent implements OnInit {
     competencias: CompetenciaModel[];
     display = false;
     competenciaEditada: CompetenciaModel;
-    confirmation: Confirmation;
-    idCompetenciaExcluida: number;
-
-    @ViewChild('dialogExcluir') dialogConfirmacao: DialogExcluirComponent;
 
     constructor(
         private competenciaService: CompetenciaService,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService) {}
+        private confirmationService: ConfirmationService) {
+
+    }
 
     ngOnInit(): void {
-        this.getCompetencias();
+        this.setCompetencias();
         this.columns();
     }
 
     atualizarCompetencia(evento) {
-        this.getCompetencias();
-    }
-
-    construirConfirmacao(id: number) {
-        console.log('qntdd');
-        this.confirmation = FuncoesUtil.criarConfirmation('Deseja mesmo excluir o registro?', 'Confirmar Exclusão',
-            () => this.excluirCompetencia(id),  'Excluir', 'Cancelar');
+        this.setCompetencias();
     }
 
     showDialog(edit: boolean) {
         this.display = true;
         this.competenciaEditada = edit ? this.competenciaEditada : undefined;
     }
+
     confirm(id) {
-        this.idCompetenciaExcluida = id;
-        this.dialogConfirmacao.showDialog();
+        this.confirmationService.confirm(FuncoesUtil.criarConfirmation('Deseja mesmo excluir o registro?', 'Confirmar Exclusão',
+            () => this.excluirCompetencia(id),  'Excluir', 'Cancelar'));
     }
 
     public columns() {
@@ -60,7 +53,7 @@ export class CompetenciaListComponent implements OnInit {
         ];
     }
 
-    public getCompetencias() {
+    public setCompetencias(): void {
         this.competenciaService.getCompetencias().subscribe(
             (data) => {
                 this.competencias = data;
@@ -81,7 +74,7 @@ export class CompetenciaListComponent implements OnInit {
         this.competenciaService.deleteCompetencia(id).subscribe(
             () => {
                 this.showMessageSuccess();
-                this.getCompetencias();
+                this.setCompetencias();
             },
             () => {
                 this.showMessageError();

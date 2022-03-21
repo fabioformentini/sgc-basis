@@ -1,6 +1,6 @@
 import { CompetenciaService } from './modules/competencia/services/competencia.service';
 import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
-import { ScrollPanel } from 'primeng';
+import {ConfirmationService, ScrollPanel} from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
 
 @Component({
@@ -45,7 +45,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     rippleMouseDownListener: EventListenerOrEventListenerObject;
 
-    constructor(public renderer2: Renderer2, public zone: NgZone, public menuService: MenusService) { }
+    constructor(public renderer2: Renderer2, public zone: NgZone, public menuService: MenusService, private confirmationService: ConfirmationService) { }
 
     ngOnInit() {
         this.zone.runOutsideAngular(() => { this.bindRipple(); });

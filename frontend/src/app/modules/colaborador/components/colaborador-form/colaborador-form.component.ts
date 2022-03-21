@@ -1,23 +1,23 @@
-import { Observable } from "rxjs";
-import { ColaboradorModel } from "./../../models/colaborador.model";
-import { SenioridadeModel } from "./../../models/senioridade.model";
-import { SenioridadeService } from "./../../services/senioridade.service";
-import { CompetenciaModel } from "./../../../competencia/models/competencia.model";
-import { CompetenciaNivel } from "./../../models/competencia-nivel.model";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { MessageService, SelectItem } from "primeng/api";
-import { CategoriaModel } from "src/app/modules/competencia/models/categoria.model";
-import { CategoriaService } from "src/app/modules/competencia/services/categoria.service";
-import { CompetenciaService } from "src/app/modules/competencia/services/competencia.service";
-import { Dropdown } from "primeng/dropdown";
-import { ColaboradorService } from "../../services/colaborador.service";
+import { Observable } from 'rxjs';
+import { ColaboradorModel } from './../../models/colaborador.model';
+import { SenioridadeService } from './../../services/senioridade.service';
+import { CompetenciaModel } from './../../../competencia/models/competencia.model';
+import { CompetenciaNivel } from './../../models/competencia-nivel.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { MessageService, SelectItem } from 'primeng/api';
+import { CategoriaModel } from 'src/app/modules/competencia/models/categoria.model';
+import { CompetenciaService } from 'src/app/modules/competencia/services/competencia.service';
+
+import { ColaboradorService } from '../../services/colaborador.service';
+import {FuncoesUtil} from '../../../../shared/funcoes.util';
+import {ConfirmationService} from 'primeng';
 
 @Component({
-    selector: "app-colaborador-form",
-    templateUrl: "./colaborador-form.component.html",
-    styleUrls: ["./colaborador-form.component.css"],
+    selector: 'app-colaborador-form',
+    templateUrl: './colaborador-form.component.html',
+    styleUrls: ['./colaborador-form.component.css'],
 })
 export class ColaboradorFormComponent implements OnInit {
     colabForm: FormGroup;
@@ -31,7 +31,7 @@ export class ColaboradorFormComponent implements OnInit {
     senioridadeSelecionada: CategoriaModel;
     titleModal = true;
 
-    public isVisualizar: boolean = true;
+    public isVisualizar = true;
 
     @Input() display = false;
     @Input() colaboradorEditado: ColaboradorModel;
@@ -44,7 +44,8 @@ export class ColaboradorFormComponent implements OnInit {
         private restColab: ColaboradorService,
         private senioridadeService: SenioridadeService,
         public activatedRouter: ActivatedRoute,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService
     ) {
         this.opcoesCompetencia = [];
     }
@@ -55,13 +56,13 @@ export class ColaboradorFormComponent implements OnInit {
 
         this.colabForm = this.fb.group({
             id: [null],
-            nome: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-            sobrenome: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-            cpf: ["", [Validators.required]],
-            email: ["", [Validators.required, Validators.email]],
-            dataNascimento: ["", [Validators.required]],
-            dataAdmissao: ["", [Validators.required]],
-            idSenioridade: ["", [Validators.required]],
+            nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+            sobrenome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+            cpf: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email]],
+            dataNascimento: ['', [Validators.required]],
+            dataAdmissao: ['', [Validators.required]],
+            idSenioridade: ['', [Validators.required]],
             competenciasList: [[], [Validators.required]],
         });
         if (!!this.colaboradorEditado) {
@@ -71,7 +72,7 @@ export class ColaboradorFormComponent implements OnInit {
     }
 
     verificaId() {
-        if (!this.colabForm.get("id").value) {
+        if (!this.colabForm.get('id').value) {
             this.createColaborador();
             return;
         }
@@ -82,14 +83,14 @@ export class ColaboradorFormComponent implements OnInit {
         this.finalizarRequisicao(
             this.restColab.postColaborador(this.colabForm.getRawValue())
         );
-        this.showMessageCriar()
+        this.showMessageCriar();
     }
 
     updateColaborador() {
         this.finalizarRequisicao(
             this.restColab.putColaborador(this.colabForm.getRawValue())
         );
-        this.showMessageEditar()
+        this.showMessageEditar();
     }
 
     finalizarRequisicao(observable: Observable<ColaboradorModel>) {
@@ -100,10 +101,10 @@ export class ColaboradorFormComponent implements OnInit {
     }
 
     showMessageEditar() {
-        this.messageService.add({severity:'success', summary: 'Colaborador editado com sucesso!', detail:''});
+        this.messageService.add({severity: 'success', summary: 'Colaborador editado com sucesso!', detail: ''});
     }
     showMessageCriar() {
-        this.messageService.add({severity:'success', summary: 'Coloborador criado com sucesso!', detail:''});
+        this.messageService.add({severity: 'success', summary: 'Coloborador criado com sucesso!', detail: ''});
     }
 
     public getCompetencia() {
@@ -112,7 +113,7 @@ export class ColaboradorFormComponent implements OnInit {
                 this.competencia = data;
             },
             (error) => {
-                console.log("Erro", error);
+                console.log('Erro', error);
             }
         );
     }
@@ -123,7 +124,7 @@ export class ColaboradorFormComponent implements OnInit {
                 this.nivel = data;
             },
             (error) => {
-                console.log("Erro", error);
+                console.log('Erro', error);
             }
         );
     }
@@ -142,7 +143,7 @@ export class ColaboradorFormComponent implements OnInit {
 
     addCompetencia() {
         const campoCompetenciasList: CompetenciaNivel[] =
-            this.colabForm.get("competenciasList").value;
+            this.colabForm.get('competenciasList').value;
         const idCompSelecionada = this.competenciaSelecionada.id;
         const idNivelSelecionado = this.nivelSelecionado.id;
         const compNivel: CompetenciaNivel = new CompetenciaNivel(
@@ -150,15 +151,20 @@ export class ColaboradorFormComponent implements OnInit {
             idNivelSelecionado
         );
         if (this.competenciaIncluida(campoCompetenciasList, compNivel)) {
-            return alert("Essa competência já foi adicionada");
+            return alert('Essa competência já foi adicionada');
         }
         campoCompetenciasList.push(compNivel);
-        console.log(campoCompetenciasList)
+        console.log(campoCompetenciasList);
+    }
+
+    confirm(id: number) {
+        this.confirmationService.confirm(FuncoesUtil.criarConfirmation('Deseja mesmo excluir o registro?', 'Confirmar Exclusão',
+            () => this.removerCompetencia(id),  'Excluir', 'Cancelar'));
     }
 
     removerCompetencia(idComp: number): void {
         const campoCompetenciasList: CompetenciaNivel[] =
-            this.colabForm.get("competenciasList").value;
+            this.colabForm.get('competenciasList').value;
 
         const index = campoCompetenciasList.findIndex(
             ({ idCompetencia }) => idCompetencia === idComp
@@ -185,25 +191,25 @@ export class ColaboradorFormComponent implements OnInit {
             return nivel.id === competenciaNivelModel.nivel;
         });
 
-        return descricaoCompetencia.nome + " = " + descricaoNivel.descricao;
+        return descricaoCompetencia.nome + ' = ' + descricaoNivel.descricao;
     }
 
     get title() {
-        return this.titleModal ? "Novo Colaborador" : "Editar Colaborador";
+        return this.titleModal ? 'Novo Colaborador' : 'Editar Colaborador';
     }
 
     get titleButton() {
-        return this.titleModal ? "Criar" : "Editar";
+        return this.titleModal ? 'Criar' : 'Editar';
     }
 
-    verificaValidacao(campo){
+    verificaValidacao(campo) {
         return this.colabForm.get(campo).valid && this.colabForm.get(campo).touched;
     }
 
-    erroCss(campo){
+    erroCss(campo) {
         return{
             'has-error': this.verificaValidacao(campo),
             'has-feedback': this.verificaValidacao(campo)
-        }
+        };
     }
 }
