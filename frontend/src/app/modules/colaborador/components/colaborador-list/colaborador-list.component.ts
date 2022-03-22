@@ -68,8 +68,8 @@ export class ColaboradorListComponent implements OnInit {
                 this.showMessageSuccess();
                 this.getColaborador();
             },
-            () => {
-                this.showMessageError();
+            (error) => {
+                this.showMessageError(error.error.ERRORS);
             }
         );
     }
@@ -77,8 +77,8 @@ export class ColaboradorListComponent implements OnInit {
     showMessageSuccess() {
         this.messageService.add({severity: 'success', summary: 'Colaborador excluído com sucesso!', detail: ''});
     }
-    showMessageError() {
-        this.messageService.add({severity: 'error', summary: 'Falha ao excluir colaborador', detail: 'Verifique se o colaborador possui alguma competência vinculada'});
+    showMessageError(msg: string) {
+        this.messageService.add({severity: 'error', summary: 'Falha ao excluir colaborador', detail: msg});
     }
 
 

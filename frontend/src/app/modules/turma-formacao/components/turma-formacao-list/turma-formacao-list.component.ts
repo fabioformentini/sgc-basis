@@ -63,8 +63,8 @@ export class TurmaFormacaoListComponent implements OnInit {
             () => {
                 this.showMessageSuccess(), this.getTurmaFormacao();
             },
-            () => {
-                this.showMessageError();
+            (error) => {
+                this.showMessageError(error.error.ERRORS);
             }
         );
     }
@@ -72,8 +72,8 @@ export class TurmaFormacaoListComponent implements OnInit {
     showMessageSuccess() {
         this.messageService.add({severity: 'success', summary: 'Turma de formação excluída com sucesso!', detail: ''});
     }
-    showMessageError() {
-        this.messageService.add({severity: 'error', summary: 'Falha ao excluir turma de formação', detail: 'Verifique se há colaboradores vinculados'});
+    showMessageError(msg: string) {
+        this.messageService.add({severity: 'error', summary: 'Falha ao excluir turma de formação', detail: msg});
     }
 
     public atualizarTurmasFormacao(event) {

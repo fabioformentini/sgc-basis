@@ -170,6 +170,11 @@ export class ColaboradorFormComponent implements OnInit {
             ({ idCompetencia }) => idCompetencia === idComp
         );
         campoCompetenciasList.splice(index, 1);
+
+    }
+
+    showMessageError(msg: string) {
+        this.messageService.add({severity: 'error', summary: 'Falha ao excluir turma de formação', detail: msg});
     }
 
     competenciaIncluida(campoCompetenciasList, compNivel): boolean {

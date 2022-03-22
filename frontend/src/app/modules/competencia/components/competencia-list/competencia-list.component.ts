@@ -30,6 +30,15 @@ export class CompetenciaListComponent implements OnInit {
         this.columns();
     }
 
+    public columns() {
+        this.cols = [
+            { field: 'nome', header: 'Nome' },
+            { field: 'descricao', header: 'Descricao' },
+            { field: 'descricaoCategoria', header: 'Categoria' },
+            { field: 'acoes', header: 'Ações' },
+        ];
+    }
+
     atualizarCompetencia(evento) {
         this.setCompetencias();
     }
@@ -44,13 +53,24 @@ export class CompetenciaListComponent implements OnInit {
             () => this.excluirCompetencia(id),  'Excluir', 'Cancelar'));
     }
 
-    public columns() {
-        this.cols = [
-            { field: 'nome', header: 'Nome' },
-            { field: 'descricao', header: 'Descricao' },
-            { field: 'descricaoCategoria', header: 'Categoria' },
-            { field: 'acoes', header: 'Ações' },
-        ];
+
+    public excluirCompetencia(id: number) {
+        this.competenciaService.deleteCompetencia(id).subscribe(
+            () => {
+                this.showMessageSuccess();
+                this.setCompetencias();
+            },
+            (error) => {
+                this.showMessageError(error.error.ERRORS);
+            }
+        );
+    }
+
+    showMessageSuccess() {
+        this.messageService.add({severity: 'success', summary: 'Competência excluída com sucesso', detail: ''});
+    }
+    showMessageError(msg: string) {
+        this.messageService.add({severity: 'error', summary: 'Falha ao excluir competência', detail: msg});
     }
 
     public setCompetencias(): void {
@@ -68,25 +88,6 @@ export class CompetenciaListComponent implements OnInit {
     public editarCompetencia(competencia: CompetenciaModel) {
         this.competenciaEditada = competencia;
         this.showDialog(true);
-    }
-
-    public excluirCompetencia(id: number) {
-        this.competenciaService.deleteCompetencia(id).subscribe(
-            () => {
-                this.showMessageSuccess();
-                this.setCompetencias();
-            },
-            () => {
-                this.showMessageError();
-            }
-        );
-    }
-
-    showMessageSuccess() {
-        this.messageService.add({severity: 'success', summary: 'Competência excluída com sucesso', detail: ''});
-    }
-    showMessageError() {
-        this.messageService.add({severity: 'error', summary: 'Falha ao excluir competência', detail: 'Verifique se a competência está associada a algum colaborador'});
     }
 
 }

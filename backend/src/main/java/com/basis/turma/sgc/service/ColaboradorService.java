@@ -58,13 +58,6 @@ public class ColaboradorService {
     }
 
     public ColaboradorDTO atualizar(Long id, ColaboradorDTO colaboradorDTO){
-//        colaboradorDTO.setId(id);
-//        if(!colaboradorRepository.existsById(id)){
-//            throw new RegraNegocioException("O colaborador de id " + id.toString() + " não existe!");
-//        }
-//        Colaborador colaborador = mapper.toEntity(colaboradorDTO);
-//        colaborador.getCompetencias().stream().forEach((competencia) ->
-//                );
         if(!colaboradorRepository.existsById(id)){
             throw new RegraNegocioException("O colaborador de id " + id.toString() + " não existe!");
         }
@@ -110,6 +103,5 @@ public class ColaboradorService {
         }
         colaboradorRepository.deleteById(id);
     }
-
 
 }
