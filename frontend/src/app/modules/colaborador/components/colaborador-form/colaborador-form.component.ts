@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
-import { ColaboradorModel } from './../../models/colaborador.model';
-import { SenioridadeService } from './../../services/senioridade.service';
-import { CompetenciaModel } from './../../../competencia/models/competencia.model';
-import { CompetenciaNivel } from './../../models/competencia-nivel.model';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ColaboradorModel } from '../../models/colaborador.model';
+import { SenioridadeService } from '../../services/senioridade.service';
+import { CompetenciaModel } from '../../../competencia/models/competencia.model';
+import { CompetenciaNivel } from '../../models/competencia-nivel.model';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
@@ -12,7 +12,7 @@ import { CompetenciaService } from 'src/app/modules/competencia/services/compete
 
 import { ColaboradorService } from '../../services/colaborador.service';
 import {FuncoesUtil} from '../../../../shared/funcoes.util';
-import {ConfirmationService} from 'primeng';
+import {ConfirmationService, FileUpload} from 'primeng';
 
 @Component({
     selector: 'app-colaborador-form',
@@ -30,9 +30,11 @@ export class ColaboradorFormComponent implements OnInit {
     nivelSelecionado: CategoriaModel;
     senioridadeSelecionada: CategoriaModel;
     titleModal = true;
+    listFileUpload: any[] = [];
 
     public isVisualizar = true;
 
+    @ViewChild('fileInput') fileInput: FileUpload;
     @Input() display = false;
     @Input() colaboradorEditado: ColaboradorModel;
     @Output() aoFechar = new EventEmitter();
@@ -127,6 +129,13 @@ export class ColaboradorFormComponent implements OnInit {
                 console.log('Erro', error);
             }
         );
+    }
+
+    private selectFilesToUpload() {
+        this.listFileUpload = [];
+        for (let i = 0; i < this.fileInput.files.length; i++) {
+            this.listFileUpload.push(this.fileInput.files[i]);
+        }
     }
 
     converterParaDropDown(n: any[], valor: string, nome: string): SelectItem[] {

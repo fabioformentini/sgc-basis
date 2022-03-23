@@ -1,7 +1,25 @@
 <p-dialog [closable]="false" [(visible)]="display" [resizable]="true">
     <p-header class="custom-dialog-header">{{ title }}</p-header>
-    <div [formGroup]="colabForm" [ngClass]="erroCss('nome')">
-        <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
+    <div [formGroup]="colabForm" [ngClass]="erroCss('nome')" >
+
+
+        <p-fileUpload
+            #fileInput
+            name="files[]"
+            multiple="false"
+            fileLimit="1"
+            (onSelect)="selectFilesToUpload()"
+            accept="image/*"
+            maxFileSize="2000000"
+            [showUploadButton]="false"
+            cancelLabel="Excluir"
+            chooseLabel="Adicionar"
+            class="ui-fileupload-buttonbar"
+            formControlName="foto"
+        >
+        </p-fileUpload>
+
+        <div class="col-12 md:col-6 lg:col-3 "  style="width: 80%">
             <label for="nome">Nome *</label>
             <input
                 type="text"
