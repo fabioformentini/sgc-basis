@@ -30,7 +30,7 @@ export class ColaboradorFormComponent implements OnInit {
     nivelSelecionado: CategoriaModel;
     senioridadeSelecionada: CategoriaModel;
     titleModal = true;
-    listFileUpload: any[] = [];
+    selectedFile: File = null;
 
     public isVisualizar = true;
 
@@ -62,6 +62,7 @@ export class ColaboradorFormComponent implements OnInit {
             sobrenome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
             cpf: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
+            foto: ['', [Validators.required]],
             dataNascimento: ['', [Validators.required]],
             dataAdmissao: ['', [Validators.required]],
             idSenioridade: ['', [Validators.required]],
@@ -131,11 +132,9 @@ export class ColaboradorFormComponent implements OnInit {
         );
     }
 
-    private selectFilesToUpload() {
-        this.listFileUpload = [];
-        for (let i = 0; i < this.fileInput.files.length; i++) {
-            this.listFileUpload.push(this.fileInput.files[i]);
-        }
+    private selectFilesToUpload(event) {
+    this.selectedFile = event.currentFiles[0];
+        console.log(this.selectedFile);
     }
 
     converterParaDropDown(n: any[], valor: string, nome: string): SelectItem[] {

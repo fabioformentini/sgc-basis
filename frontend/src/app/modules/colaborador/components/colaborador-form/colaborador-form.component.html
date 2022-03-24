@@ -5,10 +5,10 @@
 
         <p-fileUpload
             #fileInput
-            name="files[]"
+            name="foto"
             multiple="false"
             fileLimit="1"
-            (onSelect)="selectFilesToUpload()"
+            (onSelect)="selectFilesToUpload($event)"
             accept="image/*"
             maxFileSize="2000000"
             [showUploadButton]="false"
@@ -16,6 +16,7 @@
             chooseLabel="Adicionar"
             class="ui-fileupload-buttonbar"
             formControlName="foto"
+
         >
         </p-fileUpload>
 

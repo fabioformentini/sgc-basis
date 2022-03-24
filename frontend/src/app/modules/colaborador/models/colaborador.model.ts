@@ -1,10 +1,12 @@
-import { CompetenciaNivel } from "./competencia-nivel.model";
+import {CompetenciaNivel} from './competencia-nivel.model';
+
 export class ColaboradorModel {
     id: number;
     nome: string;
     sobrenome: string;
     cpf: string;
     email: string;
+    foto: string;
     dataNascimento: Date;
     dataAdmissao: Date;
     idSenioridade: number;
