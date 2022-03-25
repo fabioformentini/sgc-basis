@@ -49,4 +49,9 @@ public class TurmaFormacaoResources {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Turma de formação deletada!");
     }
 
+    @GetMapping("/vinculo/{idColaborador}/{idCompetencia}")
+    public ResponseEntity<Boolean> verificaCompetenciaColaborador(@PathVariable Long idColaborador, @PathVariable Long idCompetencia){
+        Boolean resultado = turmaFormacaoService.verificaCompetenciaColaborador(idColaborador, idCompetencia);
+        return ResponseEntity.ok().body(resultado);
+    }
 }

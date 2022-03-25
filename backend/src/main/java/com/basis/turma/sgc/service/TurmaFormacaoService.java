@@ -129,6 +129,11 @@ public class TurmaFormacaoService {
         }
     }
 
+    public Boolean verificaCompetenciaColaborador(Long idColaborador, Long idCompetencia){
+        Optional<TurmaFormacaoCompetenciaColaborador> turmaFormacaoCompetenciaColaborador =
+                turmaFormacaoCompetenciaColaboradorRepository.findByColaboradorIdAndCompetenciaId(idColaborador, idCompetencia);
+        return turmaFormacaoCompetenciaColaborador.isPresent();
+    }
 
 
 }
