@@ -77,7 +77,6 @@ export class CompetenciaListComponent implements OnInit {
         this.competenciaService.getCompetencias().subscribe(
             (data) => {
                 this.competencias = data;
-                console.log(this.competencias);
             },
             (error) => {
                 console.log('Erro', error);

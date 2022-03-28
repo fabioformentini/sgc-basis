@@ -3,6 +3,7 @@ import { TurmaFormacaoModel } from '../../models/turma-formacao.model';
 import { Component, OnInit } from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng';
 import {FuncoesUtil} from '../../../../shared/funcoes.util';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-turma-formacao-list',
@@ -19,7 +20,6 @@ export class TurmaFormacaoListComponent implements OnInit {
     display = false;
     turmaFormacaoEditada: TurmaFormacaoModel;
     isVisualizar = false;
-
 
 
     ngOnInit(): void {
@@ -49,11 +49,8 @@ export class TurmaFormacaoListComponent implements OnInit {
     }
 
     public editarTurmaFormacao(turmaFormacao: TurmaFormacaoModel) {
-        turmaFormacao.dataInicio = new Date(turmaFormacao.dataInicio);
-
-        const timeTermino = turmaFormacao.dataTermino = new Date(turmaFormacao.dataTermino);
-        turmaFormacao.dataTermino.setDate(timeTermino.getDate() + 1);
-
+        turmaFormacao.dataInicio = moment(turmaFormacao.dataInicio).toDate();
+        turmaFormacao.dataTermino = moment(turmaFormacao.dataTermino).toDate();
         this.turmaFormacaoEditada = turmaFormacao;
         this.showDialog(true);
     }

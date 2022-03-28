@@ -1,16 +1,16 @@
-.container{
+.container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 1%;
 }
 
-.titulo-comp{
+.titulo-comp {
     display: center;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.botoesAcao{
-    justify-content:space-around;
+.botoesAcao {
+    justify-content: space-around;
     display: flex;
 }

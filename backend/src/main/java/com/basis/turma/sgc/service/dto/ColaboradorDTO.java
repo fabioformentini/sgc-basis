@@ -31,8 +31,6 @@ public class ColaboradorDTO implements Serializable {
     @Email (message = "O campo email deve ser válido!")
     private String email;
 
-    private byte[] foto;
-
     @NotNull(message = "O campo data de nascimento não pode ser nulo!")
     @PastOrPresent(message = "O campo data de nascimento deve ser válido!")
     private LocalDate dataNascimento;

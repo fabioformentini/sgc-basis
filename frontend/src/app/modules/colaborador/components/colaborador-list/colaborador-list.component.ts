@@ -1,9 +1,9 @@
-
-import { ColaboradorModel } from './../../models/colaborador.model';
-import { ColaboradorService } from './../../services/colaborador.service';
-import { Component, OnInit } from '@angular/core';
+import {ColaboradorModel} from '../../models/colaborador.model';
+import {ColaboradorService} from '../../services/colaborador.service';
+import {Component, OnInit} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng';
 import {FuncoesUtil} from '../../../../shared/funcoes.util';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-colaborador-list',
@@ -22,7 +22,8 @@ export class ColaboradorListComponent implements OnInit {
     constructor(
         private colaboradorService: ColaboradorService,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService) {}
+        private confirmationService: ConfirmationService) {
+    }
 
     ngOnInit(): void {
         this.getColaborador();
@@ -31,10 +32,10 @@ export class ColaboradorListComponent implements OnInit {
 
     public columns() {
         this.cols = [
-            { field: 'nome', header: 'Nome' },
-            { field: 'email', header: 'Email'},
-            { field: 'descricaoSenioridade', header: 'Senioridade'},
-            { field: 'acoes', header: 'Ações' },
+            {field: 'nome', header: 'Nome'},
+            {field: 'email', header: 'Email'},
+            {field: 'descricaoSenioridade', header: 'Senioridade'},
+            {field: 'acoes', header: 'Ações'},
         ];
     }
 
@@ -50,19 +51,15 @@ export class ColaboradorListComponent implements OnInit {
     }
 
     public editarColaborador(colaborador: ColaboradorModel) {
-        const dataNascimento = colaborador.dataNascimento = new Date (colaborador.dataNascimento);
-        colaborador.dataNascimento.setDate(dataNascimento.getDate() + 1);
-
-        const dataAdmissao = colaborador.dataAdmissao = new Date (colaborador.dataAdmissao);
-        colaborador.dataAdmissao.setDate(dataAdmissao.getDate() + 1);
-
+        colaborador.dataNascimento = moment(colaborador.dataNascimento).toDate();
+        colaborador.dataAdmissao = moment(colaborador.dataAdmissao).toDate();
         this.colaboradorEditado = colaborador;
         this.showDialog(true);
     }
 
     confirm(id: number) {
         this.confirmationService.confirm(FuncoesUtil.criarConfirmation('Deseja mesmo excluir o registro?', 'Confirmar Exclusão',
-            () => this.excluirColaborador(id),  'Excluir', 'Cancelar'));
+            () => this.excluirColaborador(id), 'Excluir', 'Cancelar'));
     }
 
     public excluirColaborador(id: number) {
@@ -80,6 +77,7 @@ export class ColaboradorListComponent implements OnInit {
     showMessageSuccess() {
         this.messageService.add({severity: 'success', summary: 'Colaborador excluído com sucesso!', detail: ''});
     }
+
     showMessageError(msg: string) {
         this.messageService.add({severity: 'error', summary: 'Falha ao excluir colaborador', detail: msg});
     }

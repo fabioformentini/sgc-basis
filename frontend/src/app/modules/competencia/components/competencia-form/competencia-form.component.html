@@ -3,9 +3,8 @@
     <p-header class="custom-dialog-header">{{ title }}</p-header>
     <div [formGroup]="compForm" [ngClass]="erroCss('nome')">
         <div class="field col-12 md:col-12">
-            <label type="nome" id="nome">Nome *</label>
+            <label id="nome">Nome *</label>
             <input
-                for="name"
                 type="text"
                 class="inputfield w-full col-6"
                 formControlName="nome"
@@ -15,7 +14,7 @@
         </div>
 
         <div class="field col-12 md:col-12">
-            <label for="descricao">Descrição *</label>
+            <label>Descrição *</label>
             <textarea
                 rows="6"
                 cols="30"
@@ -38,8 +37,6 @@
             >
             </p-dropdown>
             <small *ngIf="compForm.get('idCategoria').invalid && compForm.get('idCategoria').touched" class="text-danger">A categoria é obrigatória!</small>
-
-            <!-- {{compForm.getRawValue() | json}} <br> -->
         </div>
     </div>
 
