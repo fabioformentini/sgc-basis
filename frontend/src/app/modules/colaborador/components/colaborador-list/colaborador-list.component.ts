@@ -50,8 +50,11 @@ export class ColaboradorListComponent implements OnInit {
     }
 
     public editarColaborador(colaborador: ColaboradorModel) {
-        colaborador.dataNascimento = new Date (colaborador.dataNascimento);
-        colaborador.dataAdmissao = new Date (colaborador.dataAdmissao);
+        const dataNascimento = colaborador.dataNascimento = new Date (colaborador.dataNascimento);
+        colaborador.dataNascimento.setDate(dataNascimento.getDate() + 1);
+
+        const dataAdmissao = colaborador.dataAdmissao = new Date (colaborador.dataAdmissao);
+        colaborador.dataAdmissao.setDate(dataAdmissao.getDate() + 1);
 
         this.colaboradorEditado = colaborador;
         this.showDialog(true);

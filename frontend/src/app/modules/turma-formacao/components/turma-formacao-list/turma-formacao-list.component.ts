@@ -10,15 +10,17 @@ import {FuncoesUtil} from '../../../../shared/funcoes.util';
     styleUrls: ['./turma-formacao-list.component.css'],
 })
 export class TurmaFormacaoListComponent implements OnInit {
+
+    constructor(private turmaFormacaoService: TurmaFormacaoService,
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService) {}
     cols: any[];
     turmasFormacao: TurmaFormacaoModel[];
     display = false;
     turmaFormacaoEditada: TurmaFormacaoModel;
     isVisualizar = false;
 
-    constructor(private turmaFormacaoService: TurmaFormacaoService,
-        private messageService: MessageService,
-        private confirmationService: ConfirmationService) {}
+
 
     ngOnInit(): void {
         this.getTurmaFormacao();
@@ -48,7 +50,10 @@ export class TurmaFormacaoListComponent implements OnInit {
 
     public editarTurmaFormacao(turmaFormacao: TurmaFormacaoModel) {
         turmaFormacao.dataInicio = new Date(turmaFormacao.dataInicio);
-        turmaFormacao.dataTermino = new Date(turmaFormacao.dataTermino);
+
+        const timeTermino = turmaFormacao.dataTermino = new Date(turmaFormacao.dataTermino);
+        turmaFormacao.dataTermino.setDate(timeTermino.getDate() + 1);
+
         this.turmaFormacaoEditada = turmaFormacao;
         this.showDialog(true);
     }

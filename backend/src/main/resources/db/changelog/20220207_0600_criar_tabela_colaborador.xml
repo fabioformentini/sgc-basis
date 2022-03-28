@@ -31,7 +31,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="foto" type="text">
+            <column name="foto" type="bytea">
                 <constraints nullable="true"/>
             </column>
 

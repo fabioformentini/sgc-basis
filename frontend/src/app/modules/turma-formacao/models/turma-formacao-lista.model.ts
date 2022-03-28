@@ -1,5 +1,5 @@
 import { CompetenciaColaboradorModel } from './competencia-colaborador.model';
-export class TurmaFormacaoListaModel{
+export class TurmaFormacaoListaModel {
     id: number;
     nome: string;
     descricao: string;

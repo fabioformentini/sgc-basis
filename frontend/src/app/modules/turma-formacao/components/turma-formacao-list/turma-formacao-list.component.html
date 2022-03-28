@@ -27,8 +27,14 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
-                <ng-container *ngIf="col.field != 'acoes'">
+                <ng-container *ngIf="col.field != 'acoes' && col.field != 'dataInicio' && col.field != 'dataTermino'">
                     {{ rowData[col.field] }}
+                </ng-container>
+                <ng-container *ngIf="col.field == 'dataInicio'">
+                    {{ rowData[col.field] | date:"dd/MM/yyyy"}}
+                </ng-container>
+                <ng-container *ngIf="col.field == 'dataTermino'">
+                    {{ rowData[col.field] | date:"dd/MM/yyyy"}}
                 </ng-container>
                 <ng-container *ngIf="col.field == 'acoes'">
                     <div class="botoesAcao">

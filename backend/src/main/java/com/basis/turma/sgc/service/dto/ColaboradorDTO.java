@@ -12,26 +12,26 @@ import java.util.List;
 
 @Data
 public class ColaboradorDTO implements Serializable {
-    public Long id;
+    private Long id;
 
     @Length(min = 3, max = 255, message = "O campo nome deve possuir no mínimo 3 caracteres!")
     @NotEmpty(message = "O campo nome não pode ser vazio!")
-    public String nome;
+    private String nome;
 
     @Length(min = 3, max = 255, message = "O campo sobrenome deve possuir no mínimo 3 caracteres!")
     @NotEmpty(message = "O campo sobrenome não pode ser vazio!")
-    public String sobrenome;
+    private String sobrenome;
 
     @Length(min = 11, message = "O campo CPF deve possuir 11 caracteres")
     @NotEmpty(message = "O campo CPF não pode ser vazio!")
     @CPF(message = "O campo CPF deve ser válido!")
-    public String cpf;
+    private String cpf;
 
     @NotEmpty(message = "O campo email não pode ser vazio!")
     @Email (message = "O campo email deve ser válido!")
-    public String email;
+    private String email;
 
-    private String foto;
+    private byte[] foto;
 
     @NotNull(message = "O campo data de nascimento não pode ser nulo!")
     @PastOrPresent(message = "O campo data de nascimento deve ser válido!")

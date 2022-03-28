@@ -11,10 +11,11 @@ import java.util.List;
 @Getter
 @Setter
 public class ColaboradorListaDTO implements Serializable {
-    public Long id;
-    public String nome;
-    public String sobrenome;
-    public String email;
+    private Long id;
+    private String nome;
+    private String sobrenome;
+    private String email;
+    private byte[] foto;
     private LocalDate dataNascimento;
     private LocalDate dataAdmissao;
     private Long idSenioridade;

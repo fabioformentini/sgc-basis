@@ -1,18 +1,19 @@
-import { Observable } from 'rxjs';
-import { ColaboradorModel } from '../../models/colaborador.model';
-import { SenioridadeService } from '../../services/senioridade.service';
-import { CompetenciaModel } from '../../../competencia/models/competencia.model';
-import { CompetenciaNivel } from '../../models/competencia-nivel.model';
+import {Observable} from 'rxjs';
+import {ColaboradorModel} from '../../models/colaborador.model';
+import {SenioridadeService} from '../../services/senioridade.service';
+import {CompetenciaModel} from '../../../competencia/models/competencia.model';
+import {CompetenciaNivel} from '../../models/competencia-nivel.model';
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MessageService, SelectItem } from 'primeng/api';
-import { CategoriaModel } from 'src/app/modules/competencia/models/categoria.model';
-import { CompetenciaService } from 'src/app/modules/competencia/services/competencia.service';
-
-import { ColaboradorService } from '../../services/colaborador.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {MessageService, SelectItem} from 'primeng/api';
+import {CategoriaModel} from 'src/app/modules/competencia/models/categoria.model';
+import {CompetenciaService} from 'src/app/modules/competencia/services/competencia.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import {ColaboradorService} from '../../services/colaborador.service';
 import {FuncoesUtil} from '../../../../shared/funcoes.util';
 import {ConfirmationService, FileUpload} from 'primeng';
+import {TurmaFormacaoService} from '../../../turma-formacao/services/turma-formacao.service';
 
 @Component({
     selector: 'app-colaborador-form',
@@ -31,6 +32,9 @@ export class ColaboradorFormComponent implements OnInit {
     senioridadeSelecionada: CategoriaModel;
     titleModal = true;
     selectedFile: File = null;
+    competenciaColaboradorBoolean: Boolean;
+    image;
+    file: FileReader = new FileReader();
 
     public isVisualizar = true;
 
@@ -47,7 +51,9 @@ export class ColaboradorFormComponent implements OnInit {
         private senioridadeService: SenioridadeService,
         public activatedRouter: ActivatedRoute,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private turmaFormacaoService: TurmaFormacaoService,
+        private sanitizer: DomSanitizer
     ) {
         this.opcoesCompetencia = [];
     }
@@ -62,15 +68,16 @@ export class ColaboradorFormComponent implements OnInit {
             sobrenome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
             cpf: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
-            foto: ['', [Validators.required]],
+            foto: [null],
             dataNascimento: ['', [Validators.required]],
             dataAdmissao: ['', [Validators.required]],
             idSenioridade: ['', [Validators.required]],
-            competenciasList: [[], [Validators.required]],
+            competenciasList: [[]],
         });
         if (!!this.colaboradorEditado) {
             this.titleModal = false;
             this.colabForm.patchValue(this.colaboradorEditado);
+
         }
     }
 
@@ -83,6 +90,7 @@ export class ColaboradorFormComponent implements OnInit {
     }
 
     createColaborador() {
+        console.log(this.colabForm);
         this.finalizarRequisicao(
             this.restColab.postColaborador(this.colabForm.getRawValue())
         );
@@ -133,8 +141,13 @@ export class ColaboradorFormComponent implements OnInit {
     }
 
     private selectFilesToUpload(event) {
-    this.selectedFile = event.currentFiles[0];
-        console.log(this.selectedFile);
+        this.image = event.currentFiles[0].objectURL;
+        this.file.readAsBinaryString(event.currentFiles[0]);
+        this.file.onload = () => this.converterArquivo();
+    }
+
+    converterArquivo() {
+        this.colabForm.get('foto').setValue(btoa(this.file.result.toString()));
     }
 
     converterParaDropDown(n: any[], valor: string, nome: string): SelectItem[] {
@@ -167,10 +180,36 @@ export class ColaboradorFormComponent implements OnInit {
 
     confirm(id: number) {
         this.confirmationService.confirm(FuncoesUtil.criarConfirmation('Deseja mesmo excluir o registro?', 'Confirmar Exclusão',
-            () => this.removerCompetencia(id),  'Excluir', 'Cancelar'));
+            () => this.verificaCompNaTurma(id),  'Excluir', 'Cancelar'));
     }
 
-    removerCompetencia(idComp: number): void {
+    verificaCompNaTurma(idComp: number): void {
+        const idColab = this.colaboradorEditado.id;
+        this.turmaFormacaoService.verificaCompetenciaTurmaFormacao(idColab, idComp).subscribe(
+            (data) => {
+                this.competenciaColaboradorBoolean = data;
+                console.log('Boolean: ', data);
+                if (this.competenciaColaboradorBoolean) {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'A competência não pode ser excluída!',
+                        detail: 'O Colaborador está lecionando essa competência em uma ou mais turmas de formação.'
+                    });
+                    return;
+                }
+               this.removerCompetencia(idComp);
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Competência removida com sucesso!'
+                });
+            },
+            (error) => {
+
+            }
+        );
+    }
+
+    removerCompetencia(idComp: number) {
         const campoCompetenciasList: CompetenciaNivel[] =
             this.colabForm.get('competenciasList').value;
 
@@ -180,6 +219,7 @@ export class ColaboradorFormComponent implements OnInit {
         campoCompetenciasList.splice(index, 1);
 
     }
+
 
     showMessageError(msg: string) {
         this.messageService.add({severity: 'error', summary: 'Falha ao excluir turma de formação', detail: msg});

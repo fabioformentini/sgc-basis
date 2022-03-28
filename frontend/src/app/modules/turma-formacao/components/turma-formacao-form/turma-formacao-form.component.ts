@@ -137,7 +137,7 @@ export class TurmaFormacaoFormComponent implements OnInit {
 
     public updateTurmaFormacao() {
         this.finalizarRequisicao(
-            this.turmaFormacaoService.putColaborador(
+            this.turmaFormacaoService.putTurmaFormacao(
                 this.turmaFormacaoForm.getRawValue()
             )
         );
@@ -163,12 +163,10 @@ export class TurmaFormacaoFormComponent implements OnInit {
     public addCompetenciaColaborador() {
         const campoCompetenciaColaboradorList: CompetenciaColaboradorModel[] =
             this.turmaFormacaoForm.get('competenciasColaboradores').value;
-        const idColaboradorSelecionado = this.colaboradorSelecionado.id;
-        const idCompetenciaSelecionada = this.competenciaSelecionada.id;
         const colaboradorCompetencia: CompetenciaColaboradorModel =
             new CompetenciaColaboradorModel(
-                idColaboradorSelecionado,
-                idCompetenciaSelecionada
+                this.colaboradorSelecionado.id,
+                this.competenciaSelecionada.id
             );
         campoCompetenciaColaboradorList.push(colaboradorCompetencia);
         console.log(campoCompetenciaColaboradorList);

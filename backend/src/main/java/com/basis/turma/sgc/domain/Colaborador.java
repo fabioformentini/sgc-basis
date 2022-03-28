@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,7 +35,9 @@ public class Colaborador implements Serializable {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Column(name = "foto")
-    private String foto;
+    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] foto;
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
     @Column(name = "data_admissao", nullable = false)

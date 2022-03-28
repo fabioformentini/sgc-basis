@@ -2,15 +2,13 @@
     <p-header class="custom-dialog-header">{{ title }}</p-header>
     <div [formGroup]="colabForm" [ngClass]="erroCss('nome')" >
 
-
         <p-fileUpload
             #fileInput
             name="foto"
-            multiple="false"
+            mode="basic"
             fileLimit="1"
             (onSelect)="selectFilesToUpload($event)"
             accept="image/*"
-            maxFileSize="2000000"
             [showUploadButton]="false"
             cancelLabel="Excluir"
             chooseLabel="Adicionar"
@@ -18,10 +16,11 @@
             formControlName="foto"
 
         >
-        </p-fileUpload>
 
+        </p-fileUpload>
+        <img style="height: 80px; width: 300px;" [src]="image">
         <div class="col-12 md:col-6 lg:col-3 "  style="width: 80%">
-            <label for="nome">Nome *</label>
+            <label>Nome *</label>
             <input
                 type="text"
                 class="inputfield w-full col-6"
@@ -31,7 +30,7 @@
         <small class="text-center" *ngIf="colabForm.get('nome').invalid && colabForm.get('nome').touched" class="text-danger">Nome é obrigatório!</small>
 
         <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
-            <label for="nome">Sobrenome *</label>
+            <label>Sobrenome *</label>
             <input
                 type="text"
                 class="inputfield w-full col-6"
@@ -41,7 +40,7 @@
         <small *ngIf="colabForm.get('sobrenome').invalid && colabForm.get('sobrenome').touched" class="text-danger">Sobrenome é obrigatório!</small>
 
         <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
-            <label for="nome">CPF *</label>
+            <label>CPF *</label>
             <p-inputMask
                 unmask="true"
                 mask="999.999.999-99"
@@ -53,7 +52,7 @@
         </div>
 
         <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
-            <label for="nome">Email *</label>
+            <label>Email *</label>
             <input
                 type="text"
                 class="inputfield w-full col-6"
@@ -76,7 +75,7 @@
         </div>
 
         <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
-            <label for="nome">Data de Nascimento *</label>
+            <label>Data de Nascimento *</label>
             <p-calendar
                 type="text"
                 styleClass="w-full col-6"
@@ -89,7 +88,7 @@
         </div>
 
         <div class="col-12 md:col-6 lg:col-3" style="width: 80%">
-            <label for="nome">Data de Admissão *</label>
+            <label>Data de Admissão *</label>
             <p-calendar
                 type="text"
                 styleClass=" w-full col-6"
@@ -170,6 +169,3 @@
     </p-footer>
 
 </p-dialog>
-<!--<p-confirmDialog [style]="{width: '50vw'}" header="Confirmação" icon="pi pi-exclamation-triangle"></p-confirmDialog>-->
-
-<!--(click)="removerCompetencia(compNivel.idCompetencia)"-->
